@@ -72,6 +72,8 @@ flags.DEFINE_string("test", None,
                     "Where the training/test data is stored.")
 flags.DEFINE_string("valid", None,
                     "Where the training/test data is stored.")
+flags.DEFINE_string("config", None,
+                    "Where the config data is stored.")
 
 flags.DEFINE_string("save_path", None,
                     "Model output directory.")
@@ -287,6 +289,7 @@ class TestConfig(object):
   batch_size = 20
   vocab_size = 10000
 
+    
 
 def run_epoch(session, model, eval_op=None, verbose=False):
   """Runs the model on the given data."""
@@ -332,6 +335,8 @@ def get_config():
     return LargeConfig()
   elif FLAGS.model == "test":
     return TestConfig()
+  elif FLAGS.model == "custom":
+    return CustomConfig()
   else:
     raise ValueError("Invalid model: %s", FLAGS.model)
 
