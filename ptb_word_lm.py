@@ -68,6 +68,9 @@ flags.DEFINE_integer("seed", 1,
                     "random seed.")
 
 
+flags.DEFINE_string("output", None,
+                    "dump the output to a file.")
+
 flags.DEFINE_string("train", None,
                     "Where the training data is stored.")
 flags.DEFINE_string("test", None,
@@ -355,6 +358,8 @@ def main(_):
   eval_config.batch_size = 1
   eval_config.num_steps = 1
 
+  file_output = open(FLAGS.output, "w")
+
   with tf.Graph().as_default():
     tf.set_random_seed(FLAGS.seed)
     initializer = tf.random_uniform_initializer(-config.init_scale,
@@ -393,11 +398,13 @@ def main(_):
         #print("Epoch: %d Train Perplexity: %.3f" % (i + 1, train_perplexity))
         #print("Epoch: %d Valid Perplexity: %.3f" % (i + 1, valid_perplexity))
         #print("Epoch: %d Test Perplexity: %.3f" % (i + 1, test_perplexity))
+        file_output.write(str(i+1)+","+str(train_perplexity)+","+str(valid_perplexity)+","+str(test_perplexity)+"\n")
         print("%d,%.3f,%.3f,%.3f" % (i+1, train_perplexity, valid_perplexity, test_perplexity))
 
       if FLAGS.save_path:
         print("Saving model to %s." % FLAGS.save_path)
         sv.saver.save(session, FLAGS.save_path, global_step=sv.global_step)
+    close(file_output)
 
 
 if __name__ == "__main__":
