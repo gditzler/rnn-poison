@@ -230,16 +230,16 @@ class PTBModel(object):
 
 class SmallConfig(object):
   """Small config."""
-  init_scale = 0.1
+  init_scale = 0.05
   learning_rate = 1.0
   max_grad_norm = 5
   num_layers = 2
   num_steps = 35
   hidden_size = 200
   max_epoch = 20
-  max_max_epoch = 13
+  max_max_epoch = 39
   keep_prob = 1.0
-  lr_decay = 0.5
+  lr_decay = 1. / 1.15  # 0.5
   batch_size = 20
   vocab_size = 10000
 
@@ -255,7 +255,7 @@ class MediumConfig(object):
   max_epoch = 20
   max_max_epoch = 39
   keep_prob = 0.5
-  lr_decay = 0.8
+  lr_decay = 1. / 1.15 #50.8
   batch_size = 20
   vocab_size = 10000
 
