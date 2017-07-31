@@ -64,14 +64,16 @@ flags.DEFINE_string(
     "A type of model. Possible options are: small, medium, large.")
 #flags.DEFINE_string("data_path", None,
 #                    "Where the training/test data is stored.")
+flags.DEFINE_integer("seed", 1,
+                    "random seed.")
 
 
 flags.DEFINE_string("train", None,
-                    "Where the training/test data is stored.")
+                    "Where the training data is stored.")
 flags.DEFINE_string("test", None,
-                    "Where the training/test data is stored.")
+                    "Where the validation data is stored.")
 flags.DEFINE_string("valid", None,
-                    "Where the training/test data is stored.")
+                    "Where the test data is stored.")
 flags.DEFINE_string("config", None,
                     "Where the config data is stored.")
 
@@ -354,6 +356,7 @@ def main(_):
   eval_config.num_steps = 1
 
   with tf.Graph().as_default():
+    tf.set_random_seed(FLAGS.seed)
     initializer = tf.random_uniform_initializer(-config.init_scale,
                                                 config.init_scale)
 
