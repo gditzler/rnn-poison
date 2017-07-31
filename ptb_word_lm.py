@@ -384,12 +384,13 @@ def main(_):
 
         #print("Epoch: %d Learning rate: %.3f" % (i + 1, session.run(m.lr)))
         train_perplexity = run_epoch(session, m, eval_op=m.train_op, verbose=False)
-        print("Epoch: %d Train Perplexity: %.3f" % (i + 1, train_perplexity))
         valid_perplexity = run_epoch(session, mvalid)
-        print("Epoch: %d Valid Perplexity: %.3f" % (i + 1, valid_perplexity))
-
         test_perplexity = run_epoch(session, mtest)
-        print("Epoch: %d Test Perplexity: %.3f" % (i + 1, test_perplexity))
+
+        #print("Epoch: %d Train Perplexity: %.3f" % (i + 1, train_perplexity))
+        #print("Epoch: %d Valid Perplexity: %.3f" % (i + 1, valid_perplexity))
+        #print("Epoch: %d Test Perplexity: %.3f" % (i + 1, test_perplexity))
+        print("%d,%.3f,%.3f,%.3f" % (i+1, train_perplexity, valid_perplexity, test_perplexity))
 
       if FLAGS.save_path:
         print("Saving model to %s." % FLAGS.save_path)
