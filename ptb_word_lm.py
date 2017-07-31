@@ -232,9 +232,9 @@ class SmallConfig(object):
   learning_rate = 1.0
   max_grad_norm = 5
   num_layers = 2
-  num_steps = 20
+  num_steps = 35
   hidden_size = 200
-  max_epoch = 4
+  max_epoch = 20
   max_max_epoch = 13
   keep_prob = 1.0
   lr_decay = 0.5
@@ -250,7 +250,7 @@ class MediumConfig(object):
   num_layers = 2
   num_steps = 35
   hidden_size = 650
-  max_epoch = 6
+  max_epoch = 20
   max_max_epoch = 39
   keep_prob = 0.5
   lr_decay = 0.8
@@ -266,10 +266,10 @@ class LargeConfig(object):
   num_layers = 2
   num_steps = 35
   hidden_size = 1500
-  max_epoch = 14
+  max_epoch = 20
   max_max_epoch = 55
   keep_prob = 0.35
-  lr_decay = 1 / 1.15
+  lr_decay = 1. / 1.15
   batch_size = 20
   vocab_size = 10000
 
@@ -382,15 +382,14 @@ def main(_):
         lr_decay = config.lr_decay ** max(i + 1 - config.max_epoch, 0.0)
         m.assign_lr(session, config.learning_rate * lr_decay)
 
-        print("Epoch: %d Learning rate: %.3f" % (i + 1, session.run(m.lr)))
-        train_perplexity = run_epoch(session, m, eval_op=m.train_op,
-                                     verbose=True)
+        #print("Epoch: %d Learning rate: %.3f" % (i + 1, session.run(m.lr)))
+        train_perplexity = run_epoch(session, m, eval_op=m.train_op, verbose=False)
         print("Epoch: %d Train Perplexity: %.3f" % (i + 1, train_perplexity))
         valid_perplexity = run_epoch(session, mvalid)
         print("Epoch: %d Valid Perplexity: %.3f" % (i + 1, valid_perplexity))
 
-      test_perplexity = run_epoch(session, mtest)
-      print("Test Perplexity: %.3f" % test_perplexity)
+        test_perplexity = run_epoch(session, mtest)
+        print("Epoch: %d Test Perplexity: %.3f" % (i + 1, test_perplexity))
 
       if FLAGS.save_path:
         print("Saving model to %s." % FLAGS.save_path)
