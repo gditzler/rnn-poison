@@ -404,7 +404,7 @@ def main(_):
       if FLAGS.save_path:
         print("Saving model to %s." % FLAGS.save_path)
         sv.saver.save(session, FLAGS.save_path, global_step=sv.global_step)
-    close(file_output)
+    file_output.close()
 
 
 if __name__ == "__main__":
